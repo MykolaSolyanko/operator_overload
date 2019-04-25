@@ -2,11 +2,16 @@
 
 class Int {
  public:
-  /*explicit*/ Int(int value = 0) : value(value) {
+  explicit Int(int value = 0) : value(value) {
   }
   int GetValue() {
     return value;
   }
+  Int& operator= (int value) {
+    this->value = value;
+    return *this;
+  }
+
   Int& operator+= (const Int& rhl) {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
     value += rhl.value;
@@ -31,8 +36,10 @@ class Int {
     ++value;
     return tmp;
   }
-
-/*  const Int operator+ (const Int& rhl) {
+  operator int() const {
+    return value;
+  }
+  /*const Int operator+ (const Int& rhl) {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
     Int tmp = *this;
     return tmp += rhl;
@@ -48,6 +55,7 @@ class Int {
  private:
   int value;
 };
+
 
 const Int operator+ (const Int& lvl, const Int& rhl) {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
@@ -68,7 +76,8 @@ int main(int argc, char const *argv[]) {
   std::cout << int1.GetValue() << std::endl;
   std::cout << int2.GetValue() << std::endl;
   int1 += int2;
-  int1 = int1 + 1; /*int1 = operator+(int1, Int(1));*/
+  // int1 = int1 + 1; /*int1 = operator+(int1, Int(1));*/
+  int1 = 11 + int1; /*int1 = operator+(11, int1);*/
   std::cout << "=====After adding value=====" << std::endl;
   std::cout << int1.GetValue() << std::endl;
   std::cout << int2.GetValue() << std::endl;
